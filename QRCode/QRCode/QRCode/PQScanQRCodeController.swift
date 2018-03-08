@@ -79,34 +79,35 @@ class PQScanQRCodeController: UIViewController, AVCaptureMetadataOutputObjectsDe
      开始扫描
      */
     private func startScan(){
-        guard let dInput = self.deviceInput else { return }
-        //1、先判断能不能添加输入
-        if !self.session.canAddInput(dInput) {
-            return
-        }
-        //2、在判断能不能添加输出
-        if !self.session.canAddOutput(self.metaDateOutput) {
-            return
-        }
-        //3、把输入输出添加到会话层中
-        self.session.addInput(dInput)
-        self.session.addOutput(self.metaDateOutput)
-        //4、设置输出能够解析的数据类型
-        self.metaDateOutput.metadataObjectTypes = self.metaDateOutput.availableMetadataObjectTypes
-        //5、设置输出代理，只要解析成功就通知代理
-        self.metaDateOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-        
-        
-        //6、添加预览图层
-        self.view.layer.insertSublayer(self.previewLayer, at: 0)
-        
-        //6.1 添加一个边框图层
-        self.previewLayer.addSublayer(self.drawLine)
-        //6.3设置扫描区域
-        let interRect :CGRect = self.previewLayer.metadataOutputRectConverted(fromLayerRect: CGRect(x: (UIScreen.main.bounds.width - self.container.frame.width) / 2.0, y: self.container.frame.origin.y, width: self.container.frame.width, height: self.container.frame.height))
-        self.metaDateOutput.rectOfInterest = interRect
-        
         DispatchQueue.global().async {
+            guard let dInput = self.deviceInput else { return }
+            //1、先判断能不能添加输入
+            if !self.session.canAddInput(dInput) {
+                return
+            }
+            //2、在判断能不能添加输出
+            if !self.session.canAddOutput(self.metaDateOutput) {
+                return
+            }
+            //3、把输入输出添加到会话层中
+            self.session.addInput(dInput)
+            self.session.addOutput(self.metaDateOutput)
+            //4、设置输出能够解析的数据类型
+            self.metaDateOutput.metadataObjectTypes = self.metaDateOutput.availableMetadataObjectTypes
+            //5、设置输出代理，只要解析成功就通知代理
+            self.metaDateOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+            
+            DispatchQueue.main.sync {
+                //6、添加预览图层
+                self.view.layer.insertSublayer(self.previewLayer, at: 0)
+                
+                //6.1 添加一个边框图层
+                self.previewLayer.addSublayer(self.drawLine)
+                //6.3设置扫描区域
+                let interRect :CGRect = self.previewLayer.metadataOutputRectConverted(fromLayerRect: CGRect(x: (UIScreen.main.bounds.width - self.container.frame.width) / 2.0, y: self.container.frame.origin.y, width: self.container.frame.width, height: self.container.frame.height))
+                self.metaDateOutput.rectOfInterest = interRect
+            }
+            
             self.session.startRunning()
         }
     }
