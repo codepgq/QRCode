@@ -176,7 +176,7 @@ class PQScanQRCodeController: UIViewController, AVCaptureMetadataOutputObjectsDe
     lazy var infoLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 0, y: 90, width: 300, height: 50))
         label.numberOfLines = 0
-        label.text = "dddd"
+        label.font = UIFont.systemFont(ofSize: 12)
         label.sizeToFit()
         return label
     }()

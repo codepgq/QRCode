@@ -37,7 +37,17 @@ class PQCreateQRCodeController: UIViewController {
     
     @objc private func saveImage(){
         guard let image = qrCodeImageView.image else { return }
-        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(image:didFinishSavingWithError:contextInfo:)), nil)
+    }
+    
+    @objc func image(image: UIImage, didFinishSavingWithError: NSError?,contextInfo: AnyObject){
+        
+        if let error = didFinishSavingWithError {
+            print(error)
+            return
+        }
+        print("image was saved")
+        
     }
     
     private func createQRCode() -> UIImage{
