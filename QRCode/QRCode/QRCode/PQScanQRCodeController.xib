@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PQScanQRCodeController" customModule="Swift4" customModuleProvider="target">
+            <connections>
+                <outlet property="animator" destination="o0L-0j-Tgv" id="Gac-od-8aS"/>
+                <outlet property="animatorView" destination="Yx7-Ux-pUA" id="KCp-HG-89i"/>
+                <outlet property="container" destination="epc-4u-qV9" id="E00-TD-ZmW"/>
+                <outlet property="containerHeight" destination="VPS-rd-dXS" id="Bjd-3e-uat"/>
+                <outlet property="overlayView" destination="Wkf-GX-T1B" id="LB1-7c-6OD"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Wkf-GX-T1B">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                </imageView>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="epc-4u-qV9">
+                    <rect key="frame" x="62" y="114" width="250" height="250"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="qrcode_border" translatesAutoresizingMaskIntoConstraints="NO" id="b5f-6i-xFM" userLabel="border">
+                            <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="qrcode_scanline_qrcode" translatesAutoresizingMaskIntoConstraints="NO" id="Yx7-Ux-pUA" userLabel="animator">
+                            <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="b5f-6i-xFM" secondAttribute="trailing" id="9Kh-E1-ifS"/>
+                        <constraint firstAttribute="bottom" secondItem="b5f-6i-xFM" secondAttribute="bottom" id="AAV-6T-fK7"/>
+                        <constraint firstItem="b5f-6i-xFM" firstAttribute="leading" secondItem="epc-4u-qV9" secondAttribute="leading" id="RjU-wh-8Ob"/>
+                        <constraint firstAttribute="height" constant="250" id="VPS-rd-dXS"/>
+                        <constraint firstItem="b5f-6i-xFM" firstAttribute="top" secondItem="epc-4u-qV9" secondAttribute="top" id="Xld-S7-Sdk"/>
+                        <constraint firstItem="Yx7-Ux-pUA" firstAttribute="height" secondItem="epc-4u-qV9" secondAttribute="height" id="Yxq-OB-DgG"/>
+                        <constraint firstItem="Yx7-Ux-pUA" firstAttribute="width" secondItem="epc-4u-qV9" secondAttribute="width" id="fHy-b9-xbK"/>
+                        <constraint firstItem="Yx7-Ux-pUA" firstAttribute="centerX" secondItem="epc-4u-qV9" secondAttribute="centerX" id="hRK-a4-mkB"/>
+                        <constraint firstItem="Yx7-Ux-pUA" firstAttribute="top" secondItem="epc-4u-qV9" secondAttribute="top" id="o0L-0j-Tgv"/>
+                        <constraint firstAttribute="width" constant="250" id="wLd-gM-jDY"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="将二维码/条形码放入框内，即可自动扫描" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zr9-na-826">
+                    <rect key="frame" x="62" y="369" width="250" height="16"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="250" id="H0l-NP-Z8b"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N2t-pc-TiW">
+                    <rect key="frame" x="133" y="597" width="108" height="30"/>
+                    <state key="normal" title="从相册选择图片">
+                        <color key="titleColor" red="1" green="0.49803921568627452" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="chiosePictureBtnClick:" destination="-1" eventType="touchUpInside" id="hSO-2s-bZ6"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="zr9-na-826" firstAttribute="top" secondItem="epc-4u-qV9" secondAttribute="bottom" constant="5" id="HZb-qw-czv"/>
+                <constraint firstItem="Wkf-GX-T1B" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Lhk-g9-VJP"/>
+                <constraint firstItem="Wkf-GX-T1B" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="PIP-Vx-MdM"/>
+                <constraint firstAttribute="trailing" secondItem="Wkf-GX-T1B" secondAttribute="trailing" id="Tk5-n6-gYg"/>
+                <constraint firstItem="N2t-pc-TiW" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="b7C-1O-sSQ"/>
+                <constraint firstAttribute="bottom" secondItem="Wkf-GX-T1B" secondAttribute="bottom" id="d4w-VI-5cM"/>
+                <constraint firstItem="zr9-na-826" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="en6-EG-u0s"/>
+                <constraint firstItem="epc-4u-qV9" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="j9Z-li-pD6"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="N2t-pc-TiW" secondAttribute="bottom" constant="40" id="nPf-aP-rbN"/>
+                <constraint firstItem="epc-4u-qV9" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="94" id="onW-sl-FaW"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="qrcode_border" width="51" height="51"/>
+        <image name="qrcode_scanline_qrcode" width="218" height="170"/>
+    </resources>
+</document>
