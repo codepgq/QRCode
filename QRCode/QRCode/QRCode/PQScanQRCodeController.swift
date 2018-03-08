@@ -17,34 +17,38 @@ class PQScanQRCodeController: UIViewController, AVCaptureMetadataOutputObjectsDe
     @IBOutlet var animator: NSLayoutConstraint!
     @IBOutlet var containerHeight: NSLayoutConstraint!
     
+    
+    var first: CFAbsoluteTime = 0
+    var end: CFAbsoluteTime = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         self.drawLine.addSublayer(lineShapeLayer)
-         view.addSubview(infoLabel)
+        view.addSubview(infoLabel)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        first = CFAbsoluteTimeGetCurrent()
         //1、设置开始位置
         animator.constant = -containerHeight.constant
         //1.1更新约束
         view.layoutIfNeeded()
-        
         //开始扫描
         startScan()
-        
-       
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         startAnimation()
+        
+        end = CFAbsoluteTimeGetCurrent()
+        print("耗时：",end - first)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         drawOverlayImage()
     }
-
+    
     
     // ******************************    所有的私有方法    **************************
     
@@ -75,37 +79,36 @@ class PQScanQRCodeController: UIViewController, AVCaptureMetadataOutputObjectsDe
      开始扫描
      */
     private func startScan(){
-        guard let dInput = deviceInput else { return }
+        guard let dInput = self.deviceInput else { return }
         //1、先判断能不能添加输入
-        if !session.canAddInput(dInput) {
+        if !self.session.canAddInput(dInput) {
             return
         }
         //2、在判断能不能添加输出
-        if !session.canAddOutput(metaDateOutput) {
+        if !self.session.canAddOutput(self.metaDateOutput) {
             return
         }
         //3、把输入输出添加到会话层中
-        session.addInput(dInput)
-        session.addOutput(metaDateOutput)
+        self.session.addInput(dInput)
+        self.session.addOutput(self.metaDateOutput)
         //4、设置输出能够解析的数据类型
-        metaDateOutput.metadataObjectTypes = metaDateOutput.availableMetadataObjectTypes
+        self.metaDateOutput.metadataObjectTypes = self.metaDateOutput.availableMetadataObjectTypes
         //5、设置输出代理，只要解析成功就通知代理
-        metaDateOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+        self.metaDateOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+        
+        
         //6、添加预览图层
-        view.layer.insertSublayer(previewLayer, at: 0)
+        self.view.layer.insertSublayer(self.previewLayer, at: 0)
         
         //6.1 添加一个边框图层
-        previewLayer.addSublayer(drawLine)
-        
-        
-        
+        self.previewLayer.addSublayer(self.drawLine)
         //6.3设置扫描区域
-        let interRect :CGRect = previewLayer.metadataOutputRectConverted(fromLayerRect: CGRect(x: (UIScreen.main.bounds.width - container.frame.width) / 2.0, y: container.frame.origin.y, width: container.frame.width, height: container.frame.height))
-        metaDateOutput.rectOfInterest = interRect
+        let interRect :CGRect = self.previewLayer.metadataOutputRectConverted(fromLayerRect: CGRect(x: (UIScreen.main.bounds.width - self.container.frame.width) / 2.0, y: self.container.frame.origin.y, width: self.container.frame.width, height: self.container.frame.height))
+        self.metaDateOutput.rectOfInterest = interRect
         
-        //7、开始扫描
-        session.startRunning()
-        
+        DispatchQueue.global().async {
+            self.session.startRunning()
+        }
     }
     
     
@@ -177,7 +180,6 @@ class PQScanQRCodeController: UIViewController, AVCaptureMetadataOutputObjectsDe
         let label = UILabel(frame: CGRect(x: 0, y: 90, width: 300, height: 50))
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 12)
-        label.sizeToFit()
         return label
     }()
 }
@@ -188,7 +190,7 @@ extension PQScanQRCodeController: UINavigationControllerDelegate, UIImagePickerC
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         //输出数据
-//        print((metadataObjects.last as AnyObject))
+        //        print((metadataObjects.last as AnyObject))
         
         lineShapeLayer.path = nil
         
